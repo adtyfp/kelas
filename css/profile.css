@@ -1,0 +1,237 @@
+/* Reset dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fdfdfd;
+    color: #333;
+    padding-bottom: 90px; /* ruang untuk bottom nav */
+}
+
+/* Container utama profil */
+.profile-container {
+    text-align: center;
+}
+
+/* Header Gradient */
+.profile-header {
+    height: 180px;
+    background: linear-gradient(to bottom, #E93CAC, #A429DD);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+/* Foto Profil */
+.profile-picture {
+    margin-top: -60px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 3px solid #fff;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: auto;
+}
+
+.profile-picture i {
+    font-size: 60px;
+    color: #ccc;
+}
+
+/* Info Pengguna */
+.profile-info h1 {
+    font-size: 22px;
+    margin: 10px 0 5px;
+    color: #111;
+}
+
+.profile-info p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Tombol aksi */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+    padding: 0 20px;
+}
+
+.action-buttons button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.btn-logout {
+    color: red;
+    border: 1px solid red;
+}
+
+.btn-logout:hover {
+    background: #ffe5e5;
+}
+
+.btn-edit:hover,
+.btn-activity:hover {
+    background-color: #f0f0f0;
+}
+
+/* Section Note */
+.note-section {
+    text-align: left;
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+.note-section h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.note-section p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+}
+
+.note-section .read-more {
+    color: red;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Modal backdrop */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal box */
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Form styling */
+.form-group {
+  margin-bottom: 15px;
+}
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.btn-submit {
+  background-color: #9c27b0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #F2F2F2;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #e0e0e0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            color: #777;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: #7D2AE8;
+            font-weight: bold;
+        }
+
+        .nav-logo-wrapper {
+            position: relative;
+            top: -20px;
+            z-index: 10;
+        }
+
+        .nav-logo img {
+            height: 40px;
+            width: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo img:hover {
+            transform: scale(1.05);
+        }
+

@@ -1,0 +1,500 @@
+Kalau kamu ingin tombol "reset aktivitas", tinggal tambahkan tombol dan fungsi ini:
+
+html
+Salin
+Edit
+<button onclick="resetAktivitas()">Reset Aktivitas</button>
+
+js
+function resetAktivitas() {
+  localStorage.removeItem('aktivitasTags');
+  activityTags.innerHTML = '';
+}
+
+// Elements
+const overlay = document.getElementById("overlay");
+const kelasSheet = document.getElementById("kelas-sheet");
+const materiSheet = document.getElementById("materi-sheet");
+const diskusiSheet = document.getElementById("Diskusi-sheet");
+const tokoSheet = document.getElementById("toko-sheet");
+
+const kelasSayaBtn = document.getElementById("kelas-saya-btn");
+const materiKuliahBtn = document.getElementById("materi-kuliah-btn");
+const diskusiKelasBtn = document.getElementById("diskusi-kelas-btn");
+const tokoBtn = document.getElementById("toko-btn"); // Optional if you use a button for this
+
+const sheets = [kelasSheet, materiSheet, diskusiSheet, tokoSheet];
+
+function showSheet(sheetToShow) {
+  const sheetActive = sheets.find((sheet) => sheet.classList.contains("show"));
+
+  if (sheetActive && sheetActive !== sheetToShow) {
+    sheetActive.classList.remove("show");
+    sheetActive.classList.add("no-animation");
+    sheetToShow.classList.add("no-animation");
+    sheetToShow.classList.add("show");
+    requestAnimationFrame(() => {
+      sheetToShow.classList.remove("no-animation");
+      sheetActive.classList.remove("no-animation");
+    });
+  } else if (!sheetActive) {
+    overlay.classList.add("show");
+    sheetToShow.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeSheet() {
+  overlay.classList.remove("show");
+  sheets.forEach((sheet) => sheet.classList.remove("show"));
+  document.body.style.overflow = "auto";
+}
+
+// Tombol/menu utama
+kelasSayaBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  showSheet(kelasSheet);
+});
+
+materiKuliahBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  showSheet(materiSheet);
+});
+
+diskusiKelasBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  showSheet(diskusiSheet);
+});
+
+tokoBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  showSheet(tokoSheet);
+});
+
+overlay.addEventListener("click", closeSheet);
+
+// Bookmark toggle
+document.querySelectorAll(".bookmark-btn").forEach((btn) => {
+  btn.addEventListener("click", () => btn.classList.toggle("active"));
+});
+
+// Day Tabs
+const dayTabs = document.querySelectorAll(".day-tab");
+dayTabs.forEach((tab) => {
+  tab.addEventListener("click", function () {
+    dayTabs.forEach((t) => t.classList.remove("active"));
+    this.classList.add("active");
+    const selectedDay = this.textContent;
+    loadDayContent(selectedDay);
+  });
+});
+
+function loadDayContent(day) {
+  const classCard = document.querySelector(".class-card");
+  classCard.innerHTML = "<p>Memuat data...</p>";
+  setTimeout(() => {
+    updateClassCard({
+      title: `Kelas online: Ekonomi Politik Internasional - ${day}`,
+      date: day,
+      time: "09.15 - 14.50",
+      lecturer: "Prof. Dr. Ahmad Budiman",
+    });
+  }, 500);
+}
+
+function updateClassCard(data) {
+  const classCard = document.querySelector(".class-card");
+  classCard.innerHTML = `
+    <span class="class-badge">Hari Ini</span>
+    <h3 class="class-title">${data.title}</h3>
+    <div class="class-info">
+      <div class="info-item"><i class="far fa-calendar"></i><span>${data.date}</span></div>
+      <div class="info-item"><i class="far fa-clock"></i><span>${data.time}</span></div>
+      <div class="info-item"><i class="fas fa-user-tie"></i><span>${data.lecturer}</span></div>
+    </div>
+    <button class="start-btn">Mulai Kelas</button>
+  `;
+}
+
+// Category click
+document.querySelectorAll(".category-item").forEach((item) => {
+  item.addEventListener("click", function (e) {
+    e.preventDefault();
+    document.querySelectorAll(".category-item").forEach((i) => i.classList.remove("active"));
+    this.classList.add("active");
+
+    const label = this.querySelector(".category-label")?.textContent || "";
+
+    switch (label) {
+      case "Kelas Saya":
+        showSheet(kelasSheet);
+        tambahAktivitas("Kelas Saya");
+        break;
+      case "Materi Kuliah":
+        showSheet(materiSheet);
+        tambahAktivitas("Materi Kuliah");
+        break;
+      case "Diskusi Kelas":
+        showSheet(diskusiSheet);
+        tambahAktivitas("Diskusi Kelas");
+        break;
+      case "Toko":
+        showSheet(tokoSheet);
+        tambahAktivitas("Toko");
+        break;
+    }
+  });
+});
+
+// Toggle expand content
+document.querySelectorAll(".card-link").forEach((link) => {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+    const cardContent = this.closest(".card-content");
+    cardContent.classList.toggle("expanded");
+
+    this.textContent = cardContent.classList.contains("expanded")
+      ? "Sembunyikan"
+      : "Selengkapnya";
+  });
+});
+
+// Like button functionality
+document.querySelectorAll(".like-btn").forEach((btn) => {
+  btn.addEventListener("click", function () {
+    this.classList.toggle("liked");
+    const icon = this.querySelector("i");
+    if (this.classList.contains("liked")) {
+      icon.classList.replace("far", "fas");
+      this.innerHTML = `<i class="fas fa-thumbs-up"></i> Disukai`;
+    } else {
+      icon.classList.replace("fas", "far");
+      this.innerHTML = `<i class="far fa-thumbs-up"></i> Suka`;
+    }
+  });
+});
+
+// Reply button functionality
+document.querySelectorAll(".reply-btn").forEach((btn) => {
+  btn.addEventListener("click", function () {
+    alert("Fitur balasan akan dibuka di sini");
+  });
+});
+
+// ====== TOKO Section Actions ======
+
+// Produk Toko
+function bukaProduk(namaProduk) {
+  alert(
+    "Kamu memilih: " + namaProduk + ".\nFitur pembelian akan segera dibuka."
+  );
+}
+
+// Riwayat Pembelian Button
+document.querySelector(".riwayat-btn")?.addEventListener("click", () => {
+  alert("Menuju halaman riwayat pembelian...");
+});
+
+const MAX_TAGS_HOME = 3;
+
+const shortcutBtns = {
+  "kelas-saya-btn": "Kelas Saya",
+  "materi-kuliah-btn": "Materi Kuliah",
+  "diskusi-kelas-btn": "Diskusi Kelas",
+  "toko-btn": "Toko",
+};
+
+const aktivitasMaster = {
+  "Kelas Saya": {
+    id: 1,
+    judul: "Kelas Saya",
+    waktu: "Baru saja",
+    icon: "chalkboard-teacher",
+    color: "pink",
+  },
+  "Materi Kuliah": {
+    id: 2,
+    judul: "Materi Kuliah",
+    waktu: "Baru saja",
+    icon: "book",
+    color: "purple",
+  },
+  "Diskusi Kelas": {
+    id: 3,
+    judul: "Diskusi Kelas",
+    waktu: "Baru saja",
+    icon: "comments",
+    color: "blue",
+  },
+  Toko: {
+    id: 4,
+    judul: "Toko",
+    waktu: "Baru saja",
+    icon: "shopping-cart",
+    color: "orange",
+  },
+};
+
+const activityTags = document.getElementById("activity-tags");
+const seeAllLink = document.getElementById("see-all-link");
+
+function buatTag(namaAktivitas) {
+  const tag = document.createElement("a");
+  tag.classList.add("tag");
+  tag.textContent = namaAktivitas;
+
+  // Contoh popup (kalau pakai href bisa diarahkan ke halaman)
+  tag.addEventListener("click", (e) => {
+    e.preventDefault();
+    bukaPopup(namaAktivitas);
+  });
+
+  return tag;
+}
+
+function bukaPopup(nama) {
+  // Sesuaikan ID popup-nya
+  const sheet = document.getElementById(
+    `${nama.toLowerCase().replace(" ", "-")}-sheet`
+  );
+  const overlay = document.getElementById("overlay");
+  if (sheet && overlay) {
+    overlay.style.display = "block";
+    sheet.style.bottom = "0";
+  }
+}
+
+function tambahAktivitas(namaAktivitas) {
+  const data = JSON.parse(localStorage.getItem("aktivitasTags")) || [];
+
+  if (
+    !data.some((item) => item.judul === namaAktivitas) &&
+    aktivitasMaster[namaAktivitas]
+  ) {
+    const newAktivitas = aktivitasMaster[namaAktivitas];
+    data.unshift(newAktivitas);
+    localStorage.setItem("aktivitasTags", JSON.stringify(data));
+  }
+
+  tampilkanAktivitasHome();
+}
+
+function tampilkanAktivitasHome() {
+  activityTags.innerHTML = "";
+  const semuaAktivitas =
+    JSON.parse(localStorage.getItem("aktivitasTags")) || [];
+  const aktivitasHome = semuaAktivitas.slice(0, MAX_TAGS_HOME);
+
+  aktivitasHome.forEach((item) => {
+    const tag = buatTag(item.judul);
+    activityTags.appendChild(tag);
+  });
+
+  seeAllLink.style.display =
+    semuaAktivitas.length > MAX_TAGS_HOME ? "inline" : "none";
+}
+
+for (const [btnId, label] of Object.entries(shortcutBtns)) {
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      tambahAktivitas(label);
+    });
+  }
+}
+
+window.addEventListener("DOMContentLoaded", tampilkanAktivitasHome);
+
+//navbar
+
+const currentPage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".bottom-nav .nav-item").forEach((link) => {
+  if (link.getAttribute("href") === currentPage) {
+    link.classList.add("active");
+  }
+});
+
+// Dummy icon & color mapping
+const iconMap = {
+  "Kelas Saya": "chalkboard-teacher",
+  "Materi Kuliah": "book",
+  "Diskusi Kelas": "comments",
+  Toko: "shopping-cart",
+  Tugas: "tasks",
+};
+
+const colorMap = {
+  "Kelas Saya": "pink",
+  "Materi Kuliah": "purple",
+  "Diskusi Kelas": "green",
+  "Toko": "orange",
+};
+
+// Fungsi untuk memuat aktivitas
+function muatAktivitas() {
+  let aktivitas = JSON.parse(localStorage.getItem("aktivitasTags")) || [];
+  renderAktivitas(aktivitas);
+}
+
+// Fungsi render
+function renderAktivitas(data) {
+  const container = document.getElementById("aktivitasList");
+  container.innerHTML = "";
+
+  if (data.length === 0) {
+    container.innerHTML =
+      '<p style="text-align: center; color: #aaa;">Tidak ada aktivitas</p>';
+    return;
+  }
+
+  data.forEach((item) => {
+    const div = document.createElement("div");
+    div.className = "aktivitas-item";
+    div.dataset.id = item.id;
+
+    div.innerHTML = `
+          <div class="icon-bulat" style="background: ${getColor(item.judul)}">
+            <i class="fas fa-${getIcon(item.judul)}"></i>
+          </div>
+          <div class="aktivitas-info">
+            <div class="nama-aktivitas">${item.judul}</div>
+            <div class="waktu-aktivitas">${item.waktu}</div>
+          </div>
+          <div class="hapus-btn"><i class="fas fa-times"></i></div>
+        `;
+
+    container.appendChild(div);
+  });
+
+  // Event hapus
+  document.querySelectorAll(".hapus-btn").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const item = this.closest(".aktivitas-item");
+      const id = parseInt(item.dataset.id);
+      hapusAktivitas(id);
+    });
+  });
+}
+
+// Fungsi hapus
+function hapusAktivitas(id) {
+  let data = JSON.parse(localStorage.getItem("aktivitasTags")) || [];
+  data = data.filter((item) => item.id !== id);
+  localStorage.setItem("aktivitasTags", JSON.stringify(data));
+  renderAktivitas(data);
+}
+
+// Hapus semua
+document.getElementById("hapusSemua").addEventListener("click", function () {
+  if (confirm("Hapus semua aktivitas?")) {
+    localStorage.removeItem("aktivitasTags");
+    renderAktivitas([]);
+  }
+});
+
+// Search toggle
+document.getElementById("searchToggle").addEventListener("click", function () {
+  const input = document.getElementById("searchInput");
+  input.style.display = input.style.display === "none" ? "block" : "none";
+  input.focus();
+});
+
+// Search filter
+document.getElementById("searchInput").addEventListener("input", function () {
+  const keyword = this.value.toLowerCase();
+  const data = JSON.parse(localStorage.getItem("aktivitasTags")) || [];
+
+  const hasil = data.filter(
+    (item) =>
+      item.judul.toLowerCase().includes(keyword) ||
+      item.waktu.toLowerCase().includes(keyword)
+  );
+
+  renderAktivitas(hasil);
+});
+
+// Icon dan warna fallback
+function getIcon(judul) {
+  return iconMap[judul] || "tag";
+}
+
+function getColor(judul) {
+  switch (judul) {
+    case "Kelas Saya":
+      return "#ff5c8d";
+    case "Materi Kuliah":
+      return "#a55eea";
+    case "Diskusi Kelas":
+      return "#45aaf2";
+    case "Toko":
+      return "#f19066";
+    default:
+      return "#bdc3c7";
+  }
+}
+
+// Load saat ready
+document.addEventListener("DOMContentLoaded", muatAktivitas);
+
+
+<?php
+require 'koneksi.php';
+
+function waktuLalu($tanggal) {
+  $selisih = time() - strtotime($tanggal);
+
+  $detik = $selisih;
+  $menit = round($selisih / 60);
+  $jam   = round($selisih / 3600);
+  $hari  = round($selisih / 86400);
+
+  if ($detik <= 60) return "$detik detik yang lalu";
+  else if ($menit <= 60) return "$menit menit yang lalu";
+  else if ($jam <= 24) return "$jam jam yang lalu";
+  else return "$hari hari yang lalu";
+}
+?>
+
+<div class="material-list">
+  <?php
+  $sql = "SELECT * FROM folder ORDER BY created_at DESC";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0):
+    while ($row = $result->fetch_assoc()):
+  ?>
+    <div class="material-card">
+      <button class="bookmark-btn"><i class="fas fa-star"></i></button>
+      <span class="material-badge"><?= waktuLalu($row['created_at']) ?></span>
+      <h3 class="material-title"><?= htmlspecialchars($row['nama_folder']) ?></h3>
+      <div class="material-date">
+        <i class="far fa-calendar"></i>
+        <span><?= date('d M Y', strtotime($row['created_at'])) ?></span>
+      </div>
+      <a href="#" class="view-all-btn">Lihat Semua Materi</a>
+    </div>
+  <?php
+    endwhile;
+  else:
+    echo "<p>Tidak ada folder.</p>";
+  endif;
+  ?>
+</div>
+
+<div class="folder-header">
+  <h3>Folder Baru</h3>
+  <form action="tambah_folder.php" method="POST" class="folder-form">
+    <input type="text" name="nama_folder" placeholder="Nama folder..." required />
+    <button type="submit" class="new-folder-btn">+</button>
+  </form>
+</div>
+
+session_start();
+
+// Pastikan user sudah login
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}

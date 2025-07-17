@@ -1,0 +1,665 @@
+<?php
+require 'koneksi.php';
+
+function waktuLalu($tanggal)
+{
+  $selisih = time() - strtotime($tanggal);
+
+  $detik = $selisih;
+  $menit = round($selisih / 60);
+  $jam = round($selisih / 3600);
+  $hari = round($selisih / 86400);
+
+  if ($detik <= 60)
+    return "$detik detik yang lalu";
+  else if ($menit <= 60)
+    return "$menit menit yang lalu";
+  else if ($jam <= 24)
+    return "$jam jam yang lalu";
+  else
+    return "$hari hari yang lalu";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelas Saya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="css/home.css">
+
+</head>
+
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-top">
+      <h2>Kelas Saya</h2>
+      <div class="header-icons">
+        <a href="kalender.html"><i class="far fa-calendar"></i></a>
+        <a href="cari.html"><i class="fas fa-search"></i></a>
+        <a href="notifikasi.html"><i class="far fa-bell"></i></a>
+        <a href="profil.html"><i class="far fa-user-circle"></i></a>
+      </div>
+    </div>
+    <div class="greeting">Halo! <span>Aditya</span></div>
+  </div>
+
+  <div class="task-card">
+    <div class="task-title">Tugas Selesai</div>
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+    <div class="schedule">
+      <div>Jadwal kelas Terdekat</div>
+      <div class="schedule-date">15 Jun 2025</div>
+    </div>
+    <a href="jadwal.html" class="view-all">Lihat Semua Jadwal</a>
+    <img src="asset/mikroskop.png" alt="Microscope" class="microscope-img" />
+  </div>
+
+
+
+  <!-- Shortcut Menu -->
+  <div class="shortcut-menu">
+    <a href="#" class="shortcut-item" id="kelas-saya-btn">
+      <div class="shortcut-icon red"><i class="fas fa-book-open"></i></div>
+      <div class="shortcut-label">Kelas Saya</div>
+    </a>
+    <a href="#" class="shortcut-item" id="materi-kuliah-btn">
+      <div class="shortcut-icon yellow"><i class="fas fa-book"></i></div>
+      <div class="shortcut-label">Materi Kuliah</div>
+    </a>
+    <a href="#" class="shortcut-item" id="diskusi-kelas-btn">
+      <div class="shortcut-icon blue"><i class="fas fa-comments"></i></div>
+      <div class="shortcut-label">Diskusi Kelas</div>
+    </a>
+    <a href="#" class="shortcut-item" id="toko-btn">
+      <div class="shortcut-icon green"><i class="fas fa-shopping-cart"></i></div>
+      <div class="shortcut-label">Toko</div>
+    </a>
+  </div>
+
+  <!-- Activity Section -->
+  <div class="activity-section">
+    <div class="section-header">
+      <div class="section-title">Aktivitas</div>
+      <a href="aktivitas.php" class="see-all-link">Lihat Semua</a>
+    </div>
+    <div class="tags" id="activity-tags">
+      <!-- Tag ditampilkan maksimal 3 -->
+    </div>
+  </div>
+
+
+
+  <!-- Announcement -->
+  <div class="announcement">
+    <h3>Pengumuman</h3>
+    <div class="announcement-header">
+      <div class="avatar"><i class="fas fa-user"></i></div>
+      <strong>Pa Mamat</strong>
+    </div>
+    <div class="announcement-content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat.
+    </div>
+  </div>
+
+  <!-- Profile Dosen Section -->
+  <div class="profile-dosen-section">
+    <h3>Profile Dosen</h3>
+    <div class="dosen-cards">
+      <a href="dosen-detail.html?id=1" class="dosen-card">
+        <img src="https://via.placeholder.com/300x100?text=Dosen+1" alt="">
+      </a>
+      <a href="dosen-detail.html?id=2" class="dosen-card">
+        <img src="https://via.placeholder.com/300x100?text=Dosen+2" alt="">
+      </a>
+      <a href="dosen-detail.html?id=3" class="dosen-card">
+        <img src="https://via.placeholder.com/300x100?text=Dosen+3" alt="">
+      </a>
+    </div>
+  </div>
+
+
+  <!-- bottom nav -->
+  <nav class="bottom-nav">
+    <a href="home.php" id="nav-beranda" class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>Beranda</span>
+    </a>
+    <a href="tugas.php" id="nav-tugas" class="nav-item">
+      <i class="fas fa-tasks"></i>
+      <span>Tugas</span>
+    </a>
+
+    <div class="nav-logo-wrapper">
+      <a href="home.php" class="nav-logo">
+        <img src="asset/kelas.png" alt="Kelas Virtual">
+      </a>
+    </div>
+
+    <a href="pesan.php" id="nav-pesan" class="nav-item">
+      <i class="fas fa-comment-alt"></i>
+      <span>Pesan</span>
+    </a>
+    <a href="profil.php" id="nav-profil" class="nav-item">
+      <i class="fas fa-user"></i>
+      <span>Profil</span>
+    </a>
+  </nav>
+
+
+
+  <!-- Bottom Sheet Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Bottom Sheet Kelas Saya -->
+  <div class="bottom-sheet" id="kelas-sheet">
+    <div class="handle-bar"></div>
+    <!-- Category Menu kelas saya-->
+    <div class="category-menu">
+      <a href="#" class="category-item">
+        <div class="category-icon pink">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <div class="category-label">Kelas Saya</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon yellow">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="category-label">Materi Kuliah</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon blue">
+          <i class="fas fa-comments"></i>
+        </div>
+        <div class="category-label">Diskusi Kelas</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon green">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="category-label">Toko</div>
+      </a>
+    </div>
+
+    <!-- Dropdown -->
+    <div class="dropdown-container">
+      <label for="course-select" class="dropdown-label">Pilih Mata Kuliah</label>
+      <select id="course-select" class="dropdown">
+        <option>Ekonomi Politik Internasional</option>
+        <option>Manajemen Bisnis</option>
+        <option>Teknologi Informasi</option>
+      </select>
+    </div>
+
+
+    <!-- Day Tabs -->
+    <div class="day-tabs">
+      <button class="day-tab active">Kam 3 Jul</button>
+      <button class="day-tab">Jum 4 Jul</button>
+      <button class="day-tab">Sab 5 Jul</button>
+      <button class="day-tab">Min 6 Jul</button>
+      <button class="day-tab">Sen 7 Jul</button>
+    </div>
+
+    <!-- Class Card -->
+    <div class="class-card">
+      <span class="class-badge">7 Jam Yang Lalu</span>
+      <h3 class="class-title">Kelas online: Ekonomi Politik Internasional</h3>
+
+      <div class="class-info">
+        <div class="info-item">
+          <i class="far fa-calendar"></i>
+          <span>3 Jul 2025</span>
+        </div>
+        <div class="info-item">
+          <i class="far fa-clock"></i>
+          <span>09.15 - 14.50</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-user-tie"></i>
+          <span>Prof. Dr. Ahmad Budiman</span>
+        </div>
+      </div>
+
+      <button class="start-btn">Mulai Kelas</button>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- Bottom Sheet Materi Kuliah -->
+  <div class="bottom-sheet" id="materi-sheet">
+    <div class="handle-bar"></div>
+    <!-- Category Menu -->
+    <div class="category-menu">
+      <a href="#" class="category-item">
+        <div class="category-icon pink">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <div class="category-label">Kelas Saya</div>
+      </a>
+      <a href="#" class="category-item active">
+        <div class="category-icon yellow">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="category-label">Materi Kuliah</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon blue">
+          <i class="fas fa-comments"></i>
+        </div>
+        <div class="category-label">Diskusi Kelas</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon green">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="category-label">Toko</div>
+      </a>
+    </div>
+
+    <!-- Folder Section -->
+    <div class="folder-header">
+      <h3>Folder Baru</h3>
+      <form action="tambah_folder.php" method="POST" class="folder-form">
+        <input type="text" name="nama_folder" placeholder="Nama folder..." required />
+        <button type="submit" class="new-folder-btn">+</button>
+      </form>
+    </div>
+
+    <div class="material-list">
+      <?php
+      $sql = "SELECT * FROM folder ORDER BY created_at DESC";
+      $result = $conn->query($sql);
+
+      if ($result->num_rows > 0):
+        while ($row = $result->fetch_assoc()):
+          ?>
+          <div class="material-card">
+            <button class="bookmark-btn"><i class="fas fa-star"></i></button>
+            <span class="material-badge"><?= waktuLalu($row['created_at']) ?></span>
+            <h3 class="material-title"><?= htmlspecialchars($row['nama_folder']) ?></h3>
+            <div class="material-date">
+              <i class="far fa-calendar"></i>
+              <span><?= date('d M Y', strtotime($row['created_at'])) ?></span>
+            </div>
+            <a href="#" class="view-all-btn">Lihat Semua Materi</a>
+          </div>
+          <?php
+        endwhile;
+      else:
+        echo "<p>Tidak ada folder.</p>";
+      endif;
+      ?>
+    </div>
+  </div>
+
+  <!-- Bottom Sheet Diskusi Kelas -->
+  <div class="bottom-sheet" id="Diskusi-sheet">
+    <div class="handle-bar"></div>
+    <!-- Category Menu -->
+    <div class="category-menu">
+      <a href="#" class="category-item">
+        <div class="category-icon pink">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <div class="category-label">Kelas Saya</div>
+      </a>
+      <a href="#" class="category-item active">
+        <div class="category-icon yellow">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="category-label">Materi Kuliah</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon blue">
+          <i class="fas fa-comments"></i>
+        </div>
+        <div class="category-label">Diskusi Kelas</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon green">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="category-label">Toko</div>
+      </a>
+    </div>
+    <!-- Discussion Content -->
+    <div class="discussion-card">
+      <div class="card-title">Forum Tanya Jawab</div>
+      <div class="card-content">
+        <span class="card-user">Admin:</span> Jadi tugas yang tadi dikumpulin kapan bu?
+      </div>
+    </div>
+
+    <div class="discussion-card">
+      <div class="card-title">Tugas – Kerja kelompok</div>
+      <div class="card-time">Hari ini 09.00</div>
+      <div class="card-content">
+        Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor ut...
+        <a href="#" class="card-link">Selengkapnya</a>
+      </div>
+      <div class="card-deadline">Dikumpulkan Sebelum 12 Jul 17.00</div>
+    </div>
+  </div>
+
+  <!-- Bottom Sheet Diskusi Kelas -->
+  <div class="bottom-sheet" id="toko-sheet">
+    <div class="handle-bar"></div>
+    <!-- Category Menu -->
+    <div class="category-menu">
+      <a href="#" class="category-item">
+        <div class="category-icon pink">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <div class="category-label">Kelas Saya</div>
+      </a>
+      <a href="#" class="category-item active">
+        <div class="category-icon yellow">
+          <i class="fas fa-book"></i>
+        </div>
+        <div class="category-label">Materi Kuliah</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon blue">
+          <i class="fas fa-comments"></i>
+        </div>
+        <div class="category-label">Diskusi Kelas</div>
+      </a>
+      <a href="#" class="category-item">
+        <div class="category-icon green">
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+        <div class="category-label">Toko</div>
+      </a>
+    </div>
+
+    <!-- Content Toko -->
+    <div class="toko-content">
+      <button class="riwayat-btn">
+        <i class="fas fa-receipt"></i> Riwayat Pembelian
+        <span class="arrow-icon">→</span>
+      </button>
+
+      <h3 class="section-title">Produk Yang Sering Dibeli</h3>
+
+      <div class="produk-grid">
+        <div class="produk-item red" onclick="bukaProduk('Paket Langganan')">
+          <h4>Paket Langganan</h4>
+          <p>Dapatkan akses penuh ke semua materi kursus kami dengan berlangganan paket pilihanmu!</p>
+        </div>
+        <div class="produk-item blue" onclick="bukaProduk('Kelas Individu')">
+          <h4>Kelas Individu</h4>
+          <p>Dapatkan bimbingan 1-on-1 langsung dari mentor profesional sesuai kebutuhanmu.</p>
+        </div>
+        <div class="produk-item pink" onclick="bukaProduk('E Book & Modul')">
+          <h4>E Book & Modul</h4>
+          <p>Kelas private belajar semua bidang bersama dosen terbaik.</p>
+        </div>
+        <div class="produk-item green" onclick="bukaProduk('Event & Webinar')">
+          <h4>Event & Webinar</h4>
+          <p>Belajar langsung dari praktisi & mentor lewat sesi interaktif dan inspiratif!</p>
+        </div>
+      </div>
+    </div>
+    <!-- Di akhir body -->
+    <script src="js/script.js"></script>
+
+
+
+    // ===== ELEMENTS =====
+const overlay = document.getElementById("overlay");
+const kelasSheet = document.getElementById("kelas-sheet");
+const materiSheet = document.getElementById("materi-sheet");
+const diskusiSheet = document.getElementById("Diskusi-sheet");
+const tokoSheet = document.getElementById("toko-sheet");
+const activityTags = document.getElementById("activity-tags");
+const seeAllLink = document.getElementById("see-all-link");
+
+const sheets = [kelasSheet, materiSheet, diskusiSheet, tokoSheet];
+
+// ===== AKTIVITAS DATA MASTER =====
+const aktivitasMaster = {
+  "Beranda": { id: 0, judul: "Beranda", waktu: "Baru saja", icon: "home", color: "teal" },
+  "Kelas Saya": { id: 1, judul: "Kelas Saya", waktu: "Baru saja", icon: "chalkboard-teacher", color: "pink" },
+  "Materi Kuliah": { id: 2, judul: "Materi Kuliah", waktu: "Baru saja", icon: "book", color: "purple" },
+  "Diskusi Kelas": { id: 3, judul: "Diskusi Kelas", waktu: "Baru saja", icon: "comments", color: "blue" },
+  "Toko": { id: 4, judul: "Toko", waktu: "Baru saja", icon: "shopping-cart", color: "orange" },
+  "Tugas": { id: 5, judul: "Tugas", waktu: "Baru saja", icon: "tasks", color: "green" },
+  "Pesan": { id: 6, judul: "Pesan", waktu: "Baru saja", icon: "comment-alt", color: "indigo" },
+  "Profil": { id: 7, judul: "Profil", waktu: "Baru saja", icon: "user", color: "gray" },
+};
+
+// ===== KELAS HARIAN (ARRAY/OBJECT DATA) =====
+const kelasHarian = {
+  kam: {
+    badge: "7 Jam Yang Lalu",
+    title: "Kelas online: Ekonomi Politik Internasional",
+    date: "3 Jul 2025",
+    time: "09.15 - 14.50",
+    dosen: "Prof. Dr. Ahmad Budiman"
+  },
+  jum: {
+    badge: "2 Jam Lagi",
+    title: "Kelas online: Manajemen Bisnis",
+    date: "4 Jul 2025",
+    time: "08.00 - 12.00",
+    dosen: "Dr. Rina Susanti"
+  },
+  sab: {
+    badge: "Besok",
+    title: "Kelas online: Teknologi Informasi",
+    date: "5 Jul 2025",
+    time: "10.00 - 13.00",
+    dosen: "Ir. Dedy Hartono, M.T."
+  },
+  min: {
+    badge: "Libur",
+    title: "Tidak ada kelas hari Minggu",
+    date: "6 Jul 2025",
+    time: "-",
+    dosen: "-"
+  },
+  sen: {
+    badge: "Baru saja",
+    title: "Kelas online: Komunikasi Politik",
+    date: "7 Jul 2025",
+    time: "07.30 - 10.00",
+    dosen: "Dr. Maya Fitriani"
+  }
+};
+
+// ===== SHEET HANDLER =====
+function showSheet(sheetToShow) {
+  const sheetActive = sheets.find(sheet => sheet.classList.contains("show"));
+  if (sheetActive && sheetActive !== sheetToShow) {
+    sheetActive.classList.remove("show", "no-animation");
+    sheetToShow.classList.add("no-animation", "show");
+    requestAnimationFrame(() => sheetToShow.classList.remove("no-animation"));
+  } else if (!sheetActive) {
+    overlay.classList.add("show");
+    sheetToShow.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closeSheet() {
+  overlay.classList.remove("show");
+  sheets.forEach(sheet => sheet.classList.remove("show"));
+  document.body.style.overflow = "auto";
+}
+
+overlay.addEventListener("click", closeSheet);
+
+// ===== AKTIVITAS LOCALSTORAGE =====
+function tambahAktivitas(namaAktivitas) {
+  let data = JSON.parse(localStorage.getItem("aktivitasTags")) || [];
+  if (!data.some(item => item.judul === namaAktivitas) && aktivitasMaster[namaAktivitas]) {
+    data.unshift(aktivitasMaster[namaAktivitas]);
+    localStorage.setItem("aktivitasTags", JSON.stringify(data));
+  }
+  tampilkanAktivitasHome();
+}
+
+function tampilkanAktivitasHome() {
+  activityTags.innerHTML = "";
+  const semuaAktivitas = JSON.parse(localStorage.getItem("aktivitasTags")) || [];
+  const aktivitasHome = semuaAktivitas.slice(0, 4);
+  aktivitasHome.forEach(item => {
+    const tag = document.createElement("a");
+    tag.classList.add("tag");
+    tag.textContent = item.judul;
+    tag.style.backgroundColor = "rgba(255, 66, 211, 0.23)";
+    tag.addEventListener("click", (e) => {
+      e.preventDefault();
+      const sheet = document.getElementById(`${item.judul.toLowerCase().replace(" ", "-")}-sheet`);
+      if (sheet && overlay) {
+        overlay.classList.add("show");
+        sheet.classList.add("show");
+        document.body.style.overflow = "hidden";
+      }
+    });
+    activityTags.appendChild(tag);
+  });
+  seeAllLink.style.display = semuaAktivitas.length > 3 ? "inline" : "none";
+}
+
+// ===== NAVBAR BOTTOM TRACKING =====
+const navbarAktivitas = {
+  "nav-beranda": "Beranda",
+  "nav-tugas": "Tugas",
+  "nav-pesan": "Pesan",
+  "nav-profil": "Profil",
+};
+
+Object.entries(navbarAktivitas).forEach(([id, label]) => {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener("click", () => tambahAktivitas(label));
+  }
+});
+
+// ===== SHORTCUT MENU =====
+const shortcutBtns = {
+  "kelas-saya-btn": { sheet: kelasSheet, label: "Kelas Saya" },
+  "materi-kuliah-btn": { sheet: materiSheet, label: "Materi Kuliah" },
+  "diskusi-kelas-btn": { sheet: diskusiSheet, label: "Diskusi Kelas" },
+  "toko-btn": { sheet: tokoSheet, label: "Toko" },
+};
+
+Object.entries(shortcutBtns).forEach(([btnId, { sheet, label }]) => {
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showSheet(sheet);
+      tambahAktivitas(label);
+    });
+  }
+});
+
+// ===== CATEGORY MENU =====
+document.querySelectorAll(".category-item").forEach((item) => {
+  item.addEventListener("click", function (e) {
+    e.preventDefault();
+    document.querySelectorAll(".category-item").forEach(i => i.classList.remove("active"));
+    this.classList.add("active");
+
+    const label = this.querySelector(".category-label")?.textContent?.trim();
+    switch (label) {
+      case "Kelas Saya":
+        showSheet(kelasSheet);
+        tambahAktivitas("Kelas Saya");
+        break;
+      case "Materi Kuliah":
+        showSheet(materiSheet);
+        tambahAktivitas("Materi Kuliah");
+        break;
+      case "Diskusi Kelas":
+        showSheet(diskusiSheet);
+        tambahAktivitas("Diskusi Kelas");
+        break;
+      case "Toko":
+        showSheet(tokoSheet);
+        tambahAktivitas("Toko");
+        break;
+    }
+  });
+});
+
+// ===== TAMPILKAN KONTEN KELAS BERDASARKAN ARRAY HARIAN =====
+function tampilkanKelas(hari) {
+  const data = kelasHarian[hari];
+  if (!data) return;
+  document.getElementById("class-badge").textContent = data.badge;
+  document.getElementById("class-title").textContent = data.title;
+  document.getElementById("class-date").textContent = data.date;
+  document.getElementById("class-time").textContent = data.time;
+  document.getElementById("class-dosen").textContent = data.dosen;
+}
+
+// ===== EVENT: KLIK TAB HARI =====
+document.querySelectorAll('.day-tab').forEach(tab => {
+  tab.addEventListener('click', function () {
+    document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+
+    const selectedDay = this.getAttribute('data-day');
+    tampilkanKelas(selectedDay);
+  });
+});
+
+// ===== AUTO DETEKSI HARI INI & TAMPILKAN =====
+window.addEventListener("DOMContentLoaded", () => {
+  tampilkanAktivitasHome();
+
+  const dayMap = ['min', 'sen', 'sel', 'rab', 'kam', 'jum', 'sab'];
+  const now = new Date().getDay();
+  const today = dayMap[now];
+  const todayBtn = document.querySelector(`.day-tab[data-day="${today}"]`);
+  if (todayBtn) todayBtn.click();
+});
+
+  document.querySelectorAll('.bookmark-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const folderId = btn.getAttribute('data-folder-id');
+      let bookmarked = JSON.parse(localStorage.getItem('bookmarkedFolders')) || [];
+
+      if (bookmarked.includes(folderId)) {
+        // Hapus dari bookmark
+        bookmarked = bookmarked.filter(id => id !== folderId);
+        btn.classList.remove('active');
+      } else {
+        // Tambah ke bookmark
+        bookmarked.push(folderId);
+        btn.classList.add('active');
+      }
+
+      localStorage.setItem('bookmarkedFolders', JSON.stringify(bookmarked));
+    });
+
+    // Saat load, tandai jika sudah dibookmark
+    const bookmarked = JSON.parse(localStorage.getItem('bookmarkedFolders')) || [];
+    if (bookmarked.includes(btn.getAttribute('data-folder-id'))) {
+      btn.classList.add('active');
+    }
+  });
+
+
+</body>
+
+</html>
